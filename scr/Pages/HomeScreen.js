@@ -4,7 +4,7 @@ import CustomButton from '../components/CustomButton'
 
 export default function HomeScreen({navigation}) {
   function navigateToSignupScreen() {
-    navigation.navigate('SignupScreen');
+    navigation.navigate('Signup');
   }
   function navigateToMainScreen() {
     navigation.navigate('Main');
@@ -31,7 +31,7 @@ export default function HomeScreen({navigation}) {
     </View>
     <View style={styles.button}>
     <CustomButton text="Entrar" onPress={navigateToMainScreen} />
-    <CustomButton text="Cadsatrar" onPress={navigateToMainScreen}/>
+    <CustomButton text="Cadsatrar" onPress={navigateToSignupScreen}/>
     
   </View>
   </View>
