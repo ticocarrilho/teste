@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Image, Button } from 'react-native';
+import {StyleSheet, View, TextInput, Image, Button} from 'react-native';
 
-export default function HomeScreen({ navigation }) {
-
+export default function HomeScreen({navigation}) {
   function navigateToSignupScreen() {
     navigation.navigate('SignupScreen');
   }
@@ -10,22 +9,14 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('Main');
   }
 
-
-
   return (
-    <View
-      style={styles.container}>
-
-      <Image
-        style={styles.logo}
-        source={require('../Images/icon.png')}
-      />
+    <View style={styles.container}>
+      <Image style={styles.logo} source={require('../Images/icon.png')} />
 
       <TextInput
         style={styles.input}
         placeholder="CPF"
         placeholderTextColor="#ffffff"
-
       />
 
       <TextInput
@@ -33,32 +24,20 @@ export default function HomeScreen({ navigation }) {
         placeholder="Senha"
         placeholderTextColor="#ffffff"
         secureTextEntry
-
-
       />
 
       <View style={styles.button}>
-        <Button
-          title="Entrar" onPress={navigateToMainScreen}
-        />
+        <Button title="Entrar" onPress={navigateToMainScreen} />
       </View>
 
       <View style={styles.button}>
         <Button
-          title="Não tem uma conta? Cadastre-se" onPress={navigateToSignupScreen}
+          title="Não tem uma conta? Cadastre-se"
+          onPress={navigateToSignupScreen}
         />
       </View>
-
-
     </View>
-
-
-
-
-
-
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -67,29 +46,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-
   },
   logo: {
     width: 120,
     height: 120,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 30
-
+    marginVertical: 30,
   },
   input: {
     width: 300,
     borderRadius: 15,
-    backgroundColor: "#28D8A1",
+    backgroundColor: '#28D8A1',
     color: '#ffffff',
     marginVertical: 5,
-    padding: 10
-
-
+    padding: 10,
   },
   button: {
-    marginVertical: 25
-  }
-
-
+    marginVertical: 25,
+  },
 });
