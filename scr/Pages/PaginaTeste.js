@@ -1,35 +1,26 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import busApi from '../api/busApi'
 
 const PaginaTeste = () => {
-  const [cep,setCep] = useState('asds')
+  const [cep,setCep] = useState('')
   const [endereco,setEndereco] = useState('')
-  const getEnd = async (cepe) => {
-    try {
-      const result= await busApi.get(cep+'/json')
-      return result
-    } catch (error) {
-      
+
+  useEffect(() => {
+    if(cep.length>=8){
+      busApi.get(cep+'/json').then((resultado)=>{
+        setEndereco(resultado.data.logradouro)
+      }).catch(error => console.log(error))
     }
-  }
+  }, [cep])
   
   return (
     <View>
         <Text>
             CEP
         </Text>
-        <TextInput style={styles.input} maxLength={9} value={cep} onChangeText={(text)=>{
-            setCep(text)
-            console.log(text + ' ' + cep)
-            if(text.length===8){
-              getEnd(text).then((resu)=>{
-                
-                setEndereco(resu.data.logradouro)
-              }).catch()
-            }
-            
-            
+        <TextInput style={styles.input} maxLength={8} value={cep} onChangeText={(text)=>{
+            setCep(text) 
           }} />
         <Text>
             Endereco
