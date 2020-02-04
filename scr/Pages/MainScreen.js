@@ -18,7 +18,7 @@ const MainScreen = ({navigation}) => {
       <Button
         title="teste"
         onPress={() => {
-          navigation.openDrawer();
+          navigation.navigate('Teste123');
         }}
       />
     </View>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, TextInput, Image, Button} from 'react-native';
+import CustomButton from '../components/CustomButton'
 
 export default function HomeScreen({navigation}) {
   function navigateToSignupScreen() {
@@ -9,7 +10,7 @@ export default function HomeScreen({navigation}) {
     navigation.navigate('Main');
   }
 
-  return (
+  return (<View style={{borderWidth:1,borderColor:'red',flex:1}}>
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../Images/icon.png')} />
 
@@ -26,23 +27,22 @@ export default function HomeScreen({navigation}) {
         secureTextEntry
       />
 
-      <View style={styles.button}>
-        <Button title="Entrar" onPress={navigateToMainScreen} />
-      </View>
-
-      <View style={styles.button}>
-        <Button
-          title="Não tem uma conta? Cadastre-se"
-          onPress={navigateToSignupScreen}
-        />
-      </View>
+      
     </View>
+    <View style={styles.button}>
+    <CustomButton text="Entrar" onPress={navigateToMainScreen} />
+    <CustomButton text="Cadsatrar" onPress={navigateToMainScreen}/>
+    
+  </View>
+  </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 10,
+    borderWidth:1,
+    borderColor:'black',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
@@ -63,6 +63,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    marginVertical: 25,
+    flex:1,
+    borderWidth:1,
+    borderColor:'black',
+    flexDirection:'row',
+    justifyContent:'space-around'
   },
 });
