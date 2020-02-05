@@ -1,8 +1,8 @@
 import HomeScreen from '../Pages/HomeScreen';
-import SignupScreen from '../Pages/SignupScreen';
+import SignupScreen from '../Pages/Cadastro/SignupScreen';
 import MainScreen from '../Pages/MainScreen';
+import EnderecoScreen from '../Pages/Cadastro/EnderecoScreen'
 import {createStackNavigator} from 'react-navigation-stack';
-import teste from '../Pages/PaginaTeste';
 const stack = createStackNavigator(
   {
     Home: {
@@ -11,12 +11,14 @@ const stack = createStackNavigator(
         headerShown: false,
       },
     },
-    Teste123:teste,
     Main: {
       screen: MainScreen,
     },
     Signup: {
       screen: SignupScreen,
+    },
+    EnderecoScreen: {
+      screen: EnderecoScreen,
     },
   },
   {

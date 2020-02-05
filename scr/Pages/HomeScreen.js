@@ -7,7 +7,7 @@ export default function HomeScreen({navigation}) {
     navigation.navigate('Signup');
   }
   function navigateToMainScreen() {
-    navigation.navigate('Main');
+    navigation.navigate('EnderecoScreen');
   }
 
   return (<View style={{borderWidth:1,borderColor:'red',flex:1}}>
