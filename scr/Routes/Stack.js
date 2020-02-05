@@ -17,7 +17,7 @@ const stack = createStackNavigator(
     Signup: {
       screen: SignupScreen,
       navigationOptions:{
-        title:'Cadastro'
+        title:'Cadastro',
       }
     },
     EnderecoScreen: {

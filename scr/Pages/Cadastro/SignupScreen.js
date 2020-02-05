@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {Alert,View, TextInput, Button, Text, ScrollView} from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import styles from './style';
+import cpf from 'cpf'
 
 export default function SignupScreen({navigation}) {
   const [dados, setDados] = useState({
@@ -46,7 +47,7 @@ export default function SignupScreen({navigation}) {
           value={dados.data}
           onChangeText={data => setDados({...dados, data})}
           returnKeyType="next"
-          onSubmitEditing={() => cpfRef.current.focus()}
+          onSubmitEditing={() => cpfRef.current.input.focus()}
           ref={dataRef}
         />
 
@@ -60,6 +61,12 @@ export default function SignupScreen({navigation}) {
           onChangeText={cpf => setDados({...dados, cpf})}
           returnKeyType="next"
           onSubmitEditing={() => vemRef.current.focus()}
+          onEndEditing={()=>{
+            if(dados.cpf.length!==0 && !cpf.isValid(dados.cpf)){
+              Alert.alert("Erro","CPF Invalido.")
+              cpfRef.current.input.focus()
+            }
+          }}
           ref={cpfRef}
           mask={'[000].[000].[000]-[00]'}
           keyboardType="numeric"
@@ -119,6 +126,10 @@ export default function SignupScreen({navigation}) {
             onPress={() => {
               if(isAnyEmpty(dados)){
                 Alert.alert("Erro","Você deve preencher todos os campos.")
+              }
+              else if(!cpf.isValid(dados.cpf)){
+                Alert.alert("Erro","CPF Invalido.")
+                cpfRef.current.focus()
               }
               else{
                 navigation.navigate('EnderecoScreen')
