@@ -16,9 +16,15 @@ const stack = createStackNavigator(
     },
     Signup: {
       screen: SignupScreen,
+      navigationOptions:{
+        title:'Cadastro'
+      }
     },
     EnderecoScreen: {
       screen: EnderecoScreen,
+      navigationOptions:{
+        title:'Cadastro'
+      }
     },
   },
   {

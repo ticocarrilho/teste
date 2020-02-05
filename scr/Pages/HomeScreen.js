@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, TextInput, Image, Button} from 'react-native';
-import CustomButton from '../components/CustomButton'
+import {StyleSheet, View, TextInput, Image} from 'react-native';
+import CustomButton from '../components/CustomButton';
+import TextInputMask from 'react-native-text-input-mask';
 
 export default function HomeScreen({navigation}) {
   function navigateToSignupScreen() {
@@ -10,39 +11,40 @@ export default function HomeScreen({navigation}) {
     navigation.navigate('EnderecoScreen');
   }
 
-  return (<View style={{borderWidth:1,borderColor:'red',flex:1}}>
-    <View style={styles.container}>
-      <Image style={styles.logo} source={require('../Images/icon.png')} />
+  return (
+    <View style={{borderWidth: 1, borderColor: 'red', flex: 1}}>
+      <View style={styles.container}>
+        <Image style={styles.logo} source={require('../Images/icon.png')} />
 
-      <TextInput
-        style={styles.input}
-        placeholder="CPF"
-        placeholderTextColor="#ffffff"
-      />
+        <TextInputMask
+          style={styles.input}
+          placeholder="CPF"
+          placeholderTextColor="#ffffff"
+          maxLength={14}
+          mask={'[000].[000].[000]-[00]'}
+          keyboardType="numeric"
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor="#ffffff"
-        secureTextEntry
-      />
-
-      
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          placeholderTextColor="#ffffff"
+          secureTextEntry
+        />
+      </View>
+      <View style={styles.button}>
+        <CustomButton text="Cadsatrar" onPress={navigateToSignupScreen} />
+        <CustomButton text="Entrar" onPress={navigateToMainScreen} />
+      </View>
     </View>
-    <View style={styles.button}>
-    <CustomButton text="Entrar" onPress={navigateToMainScreen} />
-    <CustomButton text="Cadsatrar" onPress={navigateToSignupScreen}/>
-    
-  </View>
-  </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 10,
-    borderWidth:1,
-    borderColor:'black',
+    borderWidth: 1,
+    borderColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
@@ -61,12 +63,21 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     marginVertical: 5,
     padding: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
   },
   button: {
-    flex:1,
-    borderWidth:1,
-    borderColor:'black',
-    flexDirection:'row',
-    justifyContent:'space-around'
+    flex: 1,
+    borderWidth: 1,
+    borderColor: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    
   },
 });
