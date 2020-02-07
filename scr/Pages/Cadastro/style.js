@@ -13,6 +13,12 @@ export default StyleSheet.create({
     color: '#ffffff',
     marginLeft: 5,
   },
+  senhaInvalida: {
+    fontSize: 18,
+    color: 'red',
+    marginLeft: 5,
+    fontWeight:'bold'
+  },
 
   input: {
     width: '100%',

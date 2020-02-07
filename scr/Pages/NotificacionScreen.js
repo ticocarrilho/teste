@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Button } from 'react-native';
-import { NavigationNativeContainer } from '@react-navigation/native';
 
 
 const NotificacionScreen = ({ navigation }) => {
@@ -14,7 +13,7 @@ const NotificacionScreen = ({ navigation }) => {
       <Button title="teste" onPress={()=>{
         navigation.openDrawer()
       }} />
-      <Text>Aqui é outra tela</Text>
+      <Text>Aqui é outra tela 123</Text>
     </View>
   );
 }

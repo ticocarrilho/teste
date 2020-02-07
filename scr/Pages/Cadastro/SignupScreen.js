@@ -1,8 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Alert,View, TextInput, Button, Text, ScrollView} from 'react-native';
+import {Alert, View, TextInput, Button, Text, ScrollView} from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import styles from './style';
-import cpf from 'cpf'
+import cpf from 'cpf';
+import sigaBemAPI from '../../api/sigaBemAPI';
 
 export default function SignupScreen({navigation}) {
   const [dados, setDados] = useState({
@@ -20,10 +21,23 @@ export default function SignupScreen({navigation}) {
   const senhaRef = useRef(null);
   const confirmaSenhaRef = useRef(null);
 
-  const isAnyEmpty = (objeto)=>{
-    const empty = (element) => element==='';
+  const [senhaPreenchida,setSenhaPreenchida] = useState(false)
+  const [senhasIguais,setSenhasIguais] = useState(false)
+  useEffect(()=>{
+    if(dados.senha.length>=8){
+      setSenhaPreenchida(true)
+    }
+  },[dados.senha])
+
+  useEffect(()=>{
+    setSenhasIguais(dados.senha===dados.confirmaSenha)
+
+  },[dados.confirmaSenha])
+
+  const isAnyEmpty = objeto => {
+    const empty = element => element === '';
     return Object.values(objeto).some(empty);
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -40,7 +54,6 @@ export default function SignupScreen({navigation}) {
         />
 
         <Text style={styles.text}>Data de Nascimento</Text>
-
         <TextInput
           style={styles.input}
           underlineColorAndroid="#c3c3c3"
@@ -49,6 +62,7 @@ export default function SignupScreen({navigation}) {
           returnKeyType="next"
           onSubmitEditing={() => cpfRef.current.input.focus()}
           ref={dataRef}
+          keyboardType="numeric"
         />
 
         <Text style={styles.text}>CPF</Text>
@@ -58,13 +72,16 @@ export default function SignupScreen({navigation}) {
           underlineColorAndroid="#c3c3c3"
           value={dados.cpf}
           maxLength={14}
-          onChangeText={cpf => setDados({...dados, cpf})}
+          onChangeText={(formatted, extracted) => {
+            setDados({...dados, cpf:extracted})
+            console.log(extracted + ' ' + formatted)
+          }}
           returnKeyType="next"
           onSubmitEditing={() => vemRef.current.focus()}
-          onEndEditing={()=>{
-            if(dados.cpf.length!==0 && !cpf.isValid(dados.cpf)){
-              Alert.alert("Erro","CPF Invalido.")
-              cpfRef.current.input.focus()
+          onEndEditing={() => {
+            if (dados.cpf.length !== 0 && !cpf.isValid(dados.cpf)) {
+              Alert.alert('Erro', 'CPF Invalido.');
+              cpfRef.current.input.focus();
             }
           }}
           ref={cpfRef}
@@ -98,7 +115,10 @@ export default function SignupScreen({navigation}) {
           secureTextEntry={true}
         />
 
-        <Text style={styles.text}>Confirmar Senha</Text>
+        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+          <Text style={styles.text}>Confirmar Senha</Text>
+          <Text style={styles.senhaInvalida}>{senhasIguais ?'' :'Senhas não iguais'}</Text>
+        </View>
 
         <TextInput
           style={styles.input}
@@ -107,11 +127,12 @@ export default function SignupScreen({navigation}) {
           onChangeText={confirmaSenha => setDados({...dados, confirmaSenha})}
           ref={confirmaSenhaRef}
           secureTextEntry={true}
+          editable={senhaPreenchida}
         />
         <View style={styles.button}>
           <Button
             title="Limpar Tudo"
-            onPress={() =>{
+            onPress={() => {
               setDados({
                 nome: '',
                 data: '',
@@ -119,20 +140,34 @@ export default function SignupScreen({navigation}) {
                 vem: '',
                 senha: '',
                 confirmaSenha: '',
-            })}}
+              });
+            }}
           />
           <Button
             title="Proximo"
             onPress={() => {
-              if(isAnyEmpty(dados)){
-                Alert.alert("Erro","Você deve preencher todos os campos.")
-              }
-              else if(!cpf.isValid(dados.cpf)){
-                Alert.alert("Erro","CPF Invalido.")
-                cpfRef.current.focus()
-              }
-              else{
-                navigation.navigate('EnderecoScreen')
+              if (isAnyEmpty(dados)) {
+                Alert.alert('Erro', 'Você deve preencher todos os campos.');
+              } else if (!cpf.isValid(dados.cpf)) {
+                Alert.alert('Erro', 'CPF Invalido.');
+                cpfRef.current.focus();
+              } else {
+                console.log(dados)
+                sigaBemAPI
+                  .post('/users/', {
+                    body: {
+                      cpf: dados.cpf,
+                      dt: dados.data,
+                    },
+                  })
+                  .then(resultado => {
+                    console.log(resultado);
+                    navigation.navigate('EnderecoScreen');
+                  })
+                  .catch(error => {
+                    Alert.alert('Erro', 'Erro');
+                    console.log(error);
+                  });
               }
             }}
           />
