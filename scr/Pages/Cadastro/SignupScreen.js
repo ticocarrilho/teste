@@ -166,14 +166,16 @@ export default function SignupScreen({navigation}) {
               } else if (!cpf.isValid(dados.cpf)) {
                 Alert.alert('Erro', 'CPF Invalido.');
                 cpfRef.current.focus();
-              } else {
-                console.log(dados);
+              } 
+              else {
+                const dadosNovo = new FormData();
+                dadosNovo.append('cpf',`${dados.cpf}`);
+                dadosNovo.append('dt',`${dados.data}`)
                 sigaBemAPI
-                  .post('/users/', {
-                    body: {
-                      cpf: dados.cpf,
-                      dt: dados.data,
-                    },
+                  .post('/users/', dadosNovo,{
+                    "headers":{
+                      'Content-Type': 'application/json',
+                    }
                   })
                   .then(resultado => {
                     console.log(resultado);
