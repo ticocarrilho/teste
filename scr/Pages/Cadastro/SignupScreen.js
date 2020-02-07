@@ -21,18 +21,26 @@ export default function SignupScreen({navigation}) {
   const senhaRef = useRef(null);
   const confirmaSenhaRef = useRef(null);
 
-  const [senhaPreenchida,setSenhaPreenchida] = useState(false)
-  const [senhasIguais,setSenhasIguais] = useState(false)
-  useEffect(()=>{
-    if(dados.senha.length>=8){
-      setSenhaPreenchida(true)
+  const [senhaPreenchida, setSenhaPreenchida] = useState(false);
+  const [senhasIguais, setSenhasIguais] = useState(false);
+  const [dataValida, setDataValida] = useState(false);
+  useEffect(() => {
+    if (dados.senha.length >= 8) {
+      setSenhaPreenchida(true);
     }
-  },[dados.senha])
+  }, [dados.senha]);
 
-  useEffect(()=>{
-    setSenhasIguais(dados.senha===dados.confirmaSenha)
+  useEffect(() => {
+    setSenhasIguais(dados.senha === dados.confirmaSenha);
+  }, [dados.confirmaSenha]);
 
-  },[dados.confirmaSenha])
+  useEffect(() => {
+    const regex = new RegExp(
+      '(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{4})',
+    );
+    setDataValida(regex.test(dados.data));
+    console.log(dataValida);
+  }, [dados.data]);
 
   const isAnyEmpty = objeto => {
     const empty = element => element === '';
@@ -40,8 +48,8 @@ export default function SignupScreen({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={true}>
+      <View style={styles.container}>
         <Text style={styles.text}>Nome do Usuário</Text>
 
         <TextInput
@@ -50,11 +58,16 @@ export default function SignupScreen({navigation}) {
           value={dados.nome}
           onChangeText={nome => setDados({...dados, nome})}
           returnKeyType="next"
-          onSubmitEditing={() => dataRef.current.focus()}
+          onSubmitEditing={() => dataRef.current.input.focus()}
         />
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={styles.text}>Data de Nascimento</Text>
+          <Text style={styles.dadoInvalido}>
+            {dataValida || dados.data.length === 0 ? '' : 'Data Invalida'}
+          </Text>
+        </View>
 
-        <Text style={styles.text}>Data de Nascimento</Text>
-        <TextInput
+        <TextInputMask
           style={styles.input}
           underlineColorAndroid="#c3c3c3"
           value={dados.data}
@@ -63,6 +76,7 @@ export default function SignupScreen({navigation}) {
           onSubmitEditing={() => cpfRef.current.input.focus()}
           ref={dataRef}
           keyboardType="numeric"
+          mask={'[00]/[00]/[0000]'}
         />
 
         <Text style={styles.text}>CPF</Text>
@@ -73,8 +87,7 @@ export default function SignupScreen({navigation}) {
           value={dados.cpf}
           maxLength={14}
           onChangeText={(formatted, extracted) => {
-            setDados({...dados, cpf:extracted})
-            console.log(extracted + ' ' + formatted)
+            setDados({...dados, cpf: extracted});
           }}
           returnKeyType="next"
           onSubmitEditing={() => vemRef.current.focus()}
@@ -115,9 +128,11 @@ export default function SignupScreen({navigation}) {
           secureTextEntry={true}
         />
 
-        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.text}>Confirmar Senha</Text>
-          <Text style={styles.senhaInvalida}>{senhasIguais ?'' :'Senhas não iguais'}</Text>
+          <Text style={styles.dadoInvalido}>
+            {senhasIguais ? '' : 'Senhas não iguais'}
+          </Text>
         </View>
 
         <TextInput
@@ -152,7 +167,7 @@ export default function SignupScreen({navigation}) {
                 Alert.alert('Erro', 'CPF Invalido.');
                 cpfRef.current.focus();
               } else {
-                console.log(dados)
+                console.log(dados);
                 sigaBemAPI
                   .post('/users/', {
                     body: {
@@ -172,7 +187,7 @@ export default function SignupScreen({navigation}) {
             }}
           />
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 }

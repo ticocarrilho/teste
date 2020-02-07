@@ -5,7 +5,6 @@ import styles from './style';
 import correiosAPI from '../../api/correiosAPI';
 
 export default EnderecoScreen = ({navigation}) => {
-
   const [dados, setDados] = useState({
     cep: '',
     endereco: '',
@@ -36,8 +35,8 @@ export default EnderecoScreen = ({navigation}) => {
   }, [dados.cep]);
 
   return (
-    <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={true}>
+      <View style={styles.container}>
         <Text style={styles.text}>CEP</Text>
 
         <TextInputMask
@@ -112,7 +111,7 @@ export default EnderecoScreen = ({navigation}) => {
           />
           <Button title="Cadastrar" />
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };

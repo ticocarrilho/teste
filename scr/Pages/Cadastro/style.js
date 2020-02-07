@@ -13,7 +13,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     marginLeft: 5,
   },
-  senhaInvalida: {
+  dadoInvalido: {
     fontSize: 18,
     color: 'red',
     marginLeft: 5,
