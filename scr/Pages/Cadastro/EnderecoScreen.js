@@ -3,9 +3,11 @@ import {View, TextInput, Button, Text, ScrollView} from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import styles from './style';
 import correiosAPI from '../../api/correiosAPI';
+import sigaBemAPI from '../../api/sigaBemAPI';
 
 export default EnderecoScreen = ({navigation}) => {
   const [dados, setDados] = useState({
+    ...navigation.getParam('dados'),
     cep: '',
     endereco: '',
     bairro: '',
@@ -35,7 +37,7 @@ export default EnderecoScreen = ({navigation}) => {
   }, [dados.cep]);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={true}>
+    <ScrollView style={{backgroundColor:'#23d2a8'}}>
       <View style={styles.container}>
         <Text style={styles.text}>CEP</Text>
 
@@ -109,7 +111,28 @@ export default EnderecoScreen = ({navigation}) => {
               });
             }}
           />
-          <Button title="Cadastrar" />
+          <Button title="Cadastrar" onPress={()=>{
+            sigaBemAPI
+            .post('/users/', 
+              {
+                cpf:dados.cpf+'',
+                dt:dados.data+''
+              },
+              {
+              "headers":{
+                'Content-Type': 'application/json',
+              }
+            })
+            .then(resultado => {
+              console.log(resultado);
+              // navigation.navigate('EnderecoScreen');
+            })
+            .catch(error => {
+              Alert.alert('Erro', 'Erro');
+              console.log(error);
+            });
+            
+          }}/>
         </View>
       </View>
     </ScrollView>

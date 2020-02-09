@@ -3,7 +3,6 @@ import {Alert, View, TextInput, Button, Text, ScrollView} from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import styles from './style';
 import cpf from 'cpf';
-import sigaBemAPI from '../../api/sigaBemAPI';
 
 export default function SignupScreen({navigation}) {
   const [dados, setDados] = useState({
@@ -48,7 +47,7 @@ export default function SignupScreen({navigation}) {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={true}>
+    <ScrollView style={{backgroundColor:'#23d2a8'}}>
       <View style={styles.container}>
         <Text style={styles.text}>Nome do Usuário</Text>
 
@@ -168,23 +167,8 @@ export default function SignupScreen({navigation}) {
                 cpfRef.current.focus();
               } 
               else {
-                const dadosNovo = new FormData();
-                dadosNovo.append('cpf',`${dados.cpf}`);
-                dadosNovo.append('dt',`${dados.data}`)
-                sigaBemAPI
-                  .post('/users/', dadosNovo,{
-                    "headers":{
-                      'Content-Type': 'application/json',
-                    }
-                  })
-                  .then(resultado => {
-                    console.log(resultado);
-                    navigation.navigate('EnderecoScreen');
-                  })
-                  .catch(error => {
-                    Alert.alert('Erro', 'Erro');
-                    console.log(error);
-                  });
+                navigation.navigate('EnderecoScreen',{dados});
+                
               }
             }}
           />
