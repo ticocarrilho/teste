@@ -130,7 +130,7 @@ export default EnderecoScreen = ({navigation}) => {
             })
             .then(resultado => {
               console.log(resultado);
-              Alert.alert('sucesso','sucesso')  
+              Alert.alert('Sucesso',resultado.data.message )  
               // navigation.navigate('EnderecoScreen');
             })
             .catch(error => {
