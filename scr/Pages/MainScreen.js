@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -33,7 +33,7 @@ const MainScreen = ({ navigation }) => {
       <View style={styles.container}>
         <Image style={styles.logo} source={require('../Images/icon.png')} />
         <Button
-          title="teste"
+          title="tes122te"
           onPress={() => {
             navigation.navigate('Teste123');
           }}
@@ -44,10 +44,9 @@ const MainScreen = ({ navigation }) => {
 };
 MainScreen.navigationOptions = ({ navigation }) => {
   return {
-    drawerLabel: 'Home',
     headerLeft: (
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <Text>Icone Aqui</Text>
+          <Icon style={{marginLeft:15}} name="menu" size={25} color="#727573" />
       </TouchableOpacity>
     ),
   };
