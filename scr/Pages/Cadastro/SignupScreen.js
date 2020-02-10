@@ -23,6 +23,7 @@ export default function SignupScreen({navigation}) {
   const [senhaPreenchida, setSenhaPreenchida] = useState(false);
   const [senhasIguais, setSenhasIguais] = useState(false);
   const [dataValida, setDataValida] = useState(false);
+  
   useEffect(() => {
     if (dados.senha.length >= 8) {
       setSenhaPreenchida(true);

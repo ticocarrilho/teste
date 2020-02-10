@@ -27,6 +27,7 @@
     "react-native-text-input-mask": "^2.0.0",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
+    "react-navigation-backhandler": "^1.4.0",
     "react-navigation-drawer": "^2.3.3",
     "react-navigation-native": "0.0.0",
     "react-navigation-stack": "^1.10.3"

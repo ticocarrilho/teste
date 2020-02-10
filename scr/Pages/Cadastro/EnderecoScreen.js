@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, TextInput, Button, Text, ScrollView} from 'react-native';
+import {View, TextInput, Button, Text, ScrollView,Alert} from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import styles from './style';
 import correiosAPI from '../../api/correiosAPI';
 import sigaBemAPI from '../../api/sigaBemAPI';
+import Loading from '../../components/Loading'
 
 export default EnderecoScreen = ({navigation}) => {
   const [dados, setDados] = useState({
@@ -14,6 +15,9 @@ export default EnderecoScreen = ({navigation}) => {
     cidade: '',
     estado: '',
   });
+
+  const [loading,setLoading] = useState(false)
+
   const enderecoRef = useRef(null);
   const bairroRef = useRef(null);
   const cidadeRef = useRef(null);
@@ -112,6 +116,7 @@ export default EnderecoScreen = ({navigation}) => {
             }}
           />
           <Button title="Cadastrar" onPress={()=>{
+            setLoading(true)
             sigaBemAPI
             .post('/users/', 
               {
@@ -125,14 +130,17 @@ export default EnderecoScreen = ({navigation}) => {
             })
             .then(resultado => {
               console.log(resultado);
+              Alert.alert('sucesso','sucesso')  
               // navigation.navigate('EnderecoScreen');
             })
             .catch(error => {
               Alert.alert('Erro', 'Erro');
               console.log(error);
-            });
+            })
+            .finally(()=>setLoading(false));
             
           }}/>
+          <Loading visible={loading}/>
         </View>
       </View>
     </ScrollView>

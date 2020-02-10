@@ -6,25 +6,44 @@ import {
   Image,
   Button,
   TouchableOpacity,
+  Alert,
+  BackHandler
 } from 'react-native';
-import {NavigationNativeContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
 
-const MainScreen = ({navigation}) => {
-
+const MainScreen = ({ navigation }) => {
+  const onBackPress = () => {
+    Alert.alert(
+      'Sair',
+      'Deseja sair do aplicativo?',
+      [
+        {
+          text: 'Não',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'Sim', onPress: () => BackHandler.exitApp() },
+      ],
+      { cancelable: true },
+    );
+    return true;
+  }
   return (
-    <View style={styles.container}>
-      <Image style={styles.logo} source={require('../Images/icon.png')} />
-      <Button
-        title="teste"
-        onPress={() => {
-          navigation.navigate('Teste123');
-        }}
-      />
-    </View>
+    <AndroidBackHandler onBackPress={onBackPress}>
+      <View style={styles.container}>
+        <Image style={styles.logo} source={require('../Images/icon.png')} />
+        <Button
+          title="teste"
+          onPress={() => {
+            navigation.navigate('Teste123');
+          }}
+        />
+      </View>
+    </AndroidBackHandler>
   );
 };
-MainScreen.navigationOptions = ({navigation}) => {
+MainScreen.navigationOptions = ({ navigation }) => {
   return {
     drawerLabel: 'Home',
     headerLeft: (

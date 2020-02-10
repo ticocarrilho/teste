@@ -1,18 +1,18 @@
 import React from 'react';
-import {StyleSheet, View, TextInput, Image} from 'react-native';
+import { StyleSheet, View, TextInput, Image} from 'react-native';
 import CustomButton from '../components/CustomButton';
 import TextInputMask from 'react-native-text-input-mask';
 
-export default function HomeScreen({navigation}) {
+export default function HomeScreen({ navigation }) {
   function navigateToSignupScreen() {
     navigation.navigate('Signup');
   }
   function navigateToMainScreen() {
     navigation.navigate('Drawer');
   }
-
+  
   return (
-    <View style={{borderWidth: 1, borderColor: 'red', flex: 1}}>
+    <View style={{ borderWidth: 1, borderColor: 'red', flex: 1 }}>
       <View style={styles.container}>
         <Image style={styles.logo} source={require('../Images/icon.png')} />
 
@@ -78,6 +78,6 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    
+
   },
 });
