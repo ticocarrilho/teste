@@ -20,7 +20,6 @@ const MainScreen = ({ navigation }) => {
       [
         {
           text: 'Não',
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         { text: 'Sim', onPress: () => BackHandler.exitApp() },

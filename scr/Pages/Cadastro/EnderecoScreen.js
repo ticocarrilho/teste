@@ -129,13 +129,10 @@ export default EnderecoScreen = ({navigation}) => {
               }
             })
             .then(resultado => {
-              console.log(resultado);
-              Alert.alert('Sucesso',resultado.data.message )  
-              // navigation.navigate('EnderecoScreen');
+              Alert.alert('Sucesso',resultado.data.message)  
             })
             .catch(error => {
               Alert.alert('Erro', 'Erro');
-              console.log(error);
             })
             .finally(()=>setLoading(false));
             
