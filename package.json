@@ -14,7 +14,7 @@
     "@react-native-community/masked-view": "^0.1.6",
     "@react-navigation/native": "^5.0.0-alpha.27",
     "@react-navigation/stack": "^5.0.0-alpha.58",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cpf": "^2.0.1",
     "install": "^0.13.0",
     "react": "16.9.0",
